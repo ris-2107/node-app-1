@@ -10,3 +10,7 @@ app.listen(port, () => {
 app.get("/hello_world", (req, res) => {
   res.json({"response":"Hello World"});
 });
+
+app.get("/hello_world_new", (req, res) => {
+  res.json({"response":"Hello New World"});
+});
