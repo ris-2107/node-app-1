@@ -1,5 +1,5 @@
-# Use the official Node.js 18.14.0 image as base
-FROM node:18.14.0
+# Use the official Node.js 18.14.0 Alpine image as base
+FROM node:18.14.0-alpine as build
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -8,10 +8,22 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci --only=production
 
 # Copy the rest of the application code
 COPY . .
+
+# Build the app (if you have any build steps, otherwise skip this step)
+# RUN npm run build
+
+# Use a smaller base image for the final stage
+FROM node:18.14.0-alpine
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy only the necessary files from the build stage
+COPY --from=build /usr/src/app ./
 
 # Expose the port your app runs on
 EXPOSE 8000
