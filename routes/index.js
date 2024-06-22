@@ -11,7 +11,6 @@ router.all("/:destinationAppRoot/*", async (req, res) => {
     RouteUtils.appendSlashAtStart(destinationAppRoot)
   );
   if (routeDetails) {
-    console.log(routeDetails);
     const path = req.params[0];
     axios
       .get(`${routeDetails.baseUrl}/${path}`)
