@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production
+RUN npm ci
 
 # Copy the rest of the application code
 COPY . .
@@ -25,8 +25,10 @@ WORKDIR /usr/src/app
 # Copy only the necessary files from the build stage
 COPY --from=build /usr/src/app ./
 
+# Install nodemon globally for development
+RUN npm install -g nodemon
 # Expose the port your app runs on
 EXPOSE 8000
 
 # Command to run your application
-CMD ["node", "app.js"]
+CMD ["nodemon", "app.js"]

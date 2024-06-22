@@ -1,16 +1,14 @@
-//Require module
+const routes = require("./routes");
 const express = require("express");
-// Express Initialize
 const app = express();
-const port = 8000;
-app.listen(port, () => {
-  console.log("listen port 8000");
-});
-//create api
-app.get("/hello_world", (req, res) => {
-  res.json({"response":"Hello World"});
+
+const PORT = 8000;
+
+// Database:
+const Database = require("./configurations/Database");
+
+app.listen(PORT, () => {
+  console.log("Gateway started on PORT " + PORT);
 });
 
-app.get("/hello_world_new", (req, res) => {
-  res.json({"response":"Hello New World"});
-});
+app.use("/", routes);
