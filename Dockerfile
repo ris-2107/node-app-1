@@ -33,4 +33,4 @@ RUN npm install -g nodemon
 EXPOSE 8000
 
 # Command to run your application
-CMD ["node", "app.js"]
+CMD ["nodemon", "app.js"]
