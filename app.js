@@ -11,4 +11,4 @@ app.listen(PORT, () => {
   console.log("Gateway started on PORT " + PORT);
 });
 
-app.use("/", routes);
+app.use("/api", routes);
