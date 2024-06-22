@@ -7,8 +7,10 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install dependencies
+
+USER root
 RUN npm ci
+USER node
 
 # Copy the rest of the application code
 COPY . .
@@ -31,4 +33,4 @@ RUN npm install -g nodemon
 EXPOSE 8000
 
 # Command to run your application
-CMD ["nodemon", "app.js"]
+CMD ["node", "app.js"]
