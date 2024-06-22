@@ -13,7 +13,7 @@ RUN npm install --only=production
 # Copy the rest of the application code
 COPY . .
 
-# Build the app (if you have any build steps, otherwise skip this step)
+# Build the app (if you have any build steps, otherwise skip this step, )
 # RUN npm run build
 
 # Use a smaller base image for the final stage
