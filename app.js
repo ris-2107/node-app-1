@@ -5,6 +5,8 @@ const internalGatewayRoutes = require("./routes/InternalRoutes");
 const Database = require("./configurations/Database");
 const app = express();
 
+app.use(cors());
+
 const PORT = 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

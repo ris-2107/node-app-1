@@ -33,7 +33,6 @@ class AxiosWithRetry {
       }`
     );
 
-    // Capture request start time
     config.metadata = { startTime: new Date() };
     // Log the request details
     // this.logRequest(config);
