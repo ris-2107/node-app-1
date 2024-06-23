@@ -4,6 +4,7 @@ const routes = require("./routes");
 const internalGatewayRoutes = require("./routes/InternalRoutes");
 const Database = require("./configurations/Database");
 const app = express();
+const cors = require('cors');
 
 app.use(cors());
 
