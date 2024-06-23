@@ -19,24 +19,35 @@ router.all("/:destinationAppRoot/*", async (req, res) => {
 
   if (routeDetails) {
     const path = req.params[0];
-    const headers = { ...routeDetails.headers }; // Use spread operator to clone headers
-
+    // console.log(req.body);
     try {
-      // Make request using axiosInstance with retry logic
       const response = await axiosInstance({
-        method: routeDetails.method,
+        method: req.method,
         url: `${routeDetails.baseUrl}/${path}`,
-        headers,
-        params: routeDetails.queryParams,
-        data: routeDetails.bodyParams,
-        retry: { ...retryConfig }, // Optionally pass retry configuration per request
+        headers: {
+          ...req.headers, // Clone request headers
+        },
+        params: req.query,
+        data: JSON.stringify(req.body),
+        retry: { ...retryConfig },
       });
-
-      // Forward response from destination service
       res.status(response.status).json(response.data);
     } catch (error) {
-      console.error("Error forwarding request:", error);
-      res.status(500).send("Error forwarding request");
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error response data:", error.response.data);
+        res.status(error.response.status).send(error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser
+        // and an instance of http.ClientRequest in node.js
+        console.error(
+          "No response received from target server:",
+          error.request
+        );
+        res.status(503).send("Service Unavailable");
+      }
     }
   } else {
     console.error("Route not found for App Root:", destinationAppRoot);
